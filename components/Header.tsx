@@ -1,9 +1,13 @@
+// components/Header.tsx
+
 import Image from 'next/image';
 import { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
     <header className="bg-gray-900 text-white p-4 flex justify-between items-center">
@@ -31,6 +35,35 @@ const Header = () => {
           />
         )}
         <ThemeToggle />
+        {session ? (
+          <button
+            onClick={() => signOut()}
+            className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+          >
+            Logout
+          </button>
+        ) : (
+          <>
+            <button
+              onClick={() => signIn('google')}
+              className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+            >
+              Login with Google
+            </button>
+            <button
+              onClick={() => signIn('email')}
+              className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+            >
+              Login with Email
+            </button>
+            <button
+              onClick={() => signIn('walletconnect')}
+              className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+            >
+              Login with WalletConnect
+            </button>
+          </>
+        )}
       </div>
     </header>
   );
