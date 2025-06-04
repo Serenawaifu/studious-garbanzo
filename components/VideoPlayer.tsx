@@ -12,11 +12,13 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ source, title, episodeNumber, series }) => {
+  const proxiedSource = `/api/proxy?url=${encodeURIComponent(source)}`;
+
   return (
     <div className="relative">
       <Player
         playsInline
-        src={source}
+        src={proxiedSource}
         fluid={false}
         width="100%"
         height="auto"
