@@ -21,3 +21,50 @@ const Header = () => {
       <div className="flex items-center">
         <button
           onClick={() => setIsSearchOpen(!isSearchOpen)}
+          className="text-2xl"
+        >
+          🔎
+        </button>
+        {isSearchOpen && (
+          <input
+            type="text"
+            placeholder="Search..."
+            className="ml-2 px-4 py-2 rounded-md bg-gray-700 text-white"
+          />
+        )}
+        <ThemeToggle />
+        {session ? (
+          <button
+            onClick={() => signOut()}
+            className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+          >
+            Logout
+          </button>
+        ) : (
+          <>
+            <button
+              onClick={() => signIn('google')}
+              className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+            >
+              Login with Google
+            </button>
+            <button
+              onClick={() => signIn('email')}
+              className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+            >
+              Login with Email
+            </button>
+            <button
+              onClick={() => signIn('walletconnect')}
+              className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+            >
+              Login with WalletConnect
+            </button>
+          </>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;
