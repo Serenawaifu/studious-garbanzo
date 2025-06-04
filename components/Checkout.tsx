@@ -4,21 +4,14 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Protected from './Protected';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements, CardElement } from '@stripe/react-stripe-js';
 import Razorpay from 'razorpay';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-interface CartItem {
-  id: string;
-  title: string;
-  price: number;
-  quantity: number;
-}
-
 const Checkout = () => {
   const { data: session } = useSession();
-  const [cartItems, setCartItems] = useState<CartItem[]>([
+  const [cartItems, setCartItems] = useState([
     {
       id: '1',
       title: 'Product 1',
@@ -31,12 +24,9 @@ const Checkout = () => {
       price: 29.99,
       quantity: 1,
     },
-    // Add more items as needed
   ]);
   const [address, setAddress] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('stripe');
-  const stripe = useStripe();
-  const elements = useElements();
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setAddress(e.target.value);
@@ -60,14 +50,11 @@ const Checkout = () => {
 
       const { id } = await response.json();
 
-      if (stripe && elements) {
-        const result = await stripe.redirectToCheckout({
-          sessionId: id,
-        });
+      const stripe = await stripePromise;
+      const result = await stripe.redirectToCheckout({ sessionId: id });
 
-        if (result.error) {
-          alert(result.error.message);
-        }
+      if (result.error) {
+        alert(result.error.message);
       }
     } else if (paymentMethod === 'razorpay') {
       const totalAmount = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -110,10 +97,10 @@ const Checkout = () => {
 
           if (verification.status === 'success') {
             alert('Payment successful!');
-            router.push('/success');
+            // Redirect to success page
           } else {
             alert('Payment failed!');
-            router.push('/cancel');
+            // Redirect to cancel page
           }
         },
         prefill: {
@@ -187,4 +174,3 @@ const CheckoutWrapper = () => {
 };
 
 export default CheckoutWrapper;
-    
