@@ -1,0 +1,18 @@
+body {
+  background-color: #f5f5dc;
+  color: #5b3a29;
+  font-family: 'Georgia', serif;
+}
+
+h1, h2, h3 {
+  color: #8b4513;
+}
+
+a {
+  color: #8b4513;
+}
+
+button {
+  background-color: #8b4513;
+  color: #fff;
+}
