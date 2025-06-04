@@ -6,13 +6,14 @@ import SakuraBackground from '../components/SakuraBackground';
 import Carousel from '../components/Carousel';
 import { useRef } from 'react';
 import Protected from '../components/Protected';
-import { useSession } from 'next-auth/react';
+import Forum from '../components/Forum';
 
 const Home = () => {
   const animeRef = useRef(null);
   const mangaRef = useRef(null);
   const manhwaRef = useRef(null);
   const marketplaceRef = useRef(null);
+  const forumRef = useRef(null);
 
   const scrollToSection = (ref: React.RefObject<HTMLElement>) => {
     if (ref.current) {
@@ -28,6 +29,11 @@ const Home = () => {
       poster: 'https://via.placeholder.com/200x300',
       tags: ['Action', 'Adventure'],
       episodes: 12,
+      sources: {
+        1: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+        2: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
+        // Add more episodes as needed
+      },
     },
     {
       id: '2',
@@ -36,6 +42,11 @@ const Home = () => {
       poster: 'https://via.placeholder.com/200x300',
       tags: ['Comedy', 'Slice of Life'],
       episodes: 24,
+      sources: {
+        1: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+        2: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
+        // Add more episodes as needed
+      },
     },
     // Add more items as needed
   ];
@@ -151,12 +162,27 @@ const Home = () => {
           >
             🡹 Manhwa
           </button>
+          <button
+            onClick={() => scrollToSection(forumRef)}
+            className="mt-8 bg-gray-700 text-white px-4 py-2 rounded-md"
+          >
+            🡻 Forum
+          </button>
           <Protected>
             <div className="mt-8 bg-gray-700 p-4 rounded-md">
               <h3 className="text-lg font-semibold">Protected Section</h3>
               <p className="text-sm">This section is protected and requires login.</p>
             </div>
           </Protected>
+        </section>
+        <section ref={forumRef} className="py-16 bg-gray-800 text-white">
+          <Forum />
+          <button
+            onClick={() => scrollToSection(marketplaceRef)}
+            className="mt-8 bg-gray-700 text-white px-4 py-2 rounded-md"
+          >
+            🡹 Marketplace
+          </button>
         </section>
       </main>
     </>
