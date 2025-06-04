@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Header from '../../../components/Header';
 import SakuraBackground from '../../../components/SakuraBackground';
 import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const AdminDashboard = () => {
@@ -27,7 +28,7 @@ const AdminDashboard = () => {
   const orders = [
     {
       id: '1',
-      user: 'User1',
+      user: 'User 1',
       items: [
         { title: 'Product 1', price: 19.99, quantity: 1 },
         { title: 'Product 2', price: 29.99, quantity: 2 },
@@ -37,7 +38,7 @@ const AdminDashboard = () => {
     },
     {
       id: '2',
-      user: 'User2',
+      user: 'User 2',
       items: [
         { title: 'Product 1', price: 19.99, quantity: 1 },
       ],
@@ -82,7 +83,7 @@ const AdminDashboard = () => {
             {orders.map((order) => (
               <div key={order.id} className="bg-gray-700 p-4 rounded-md">
                 <h3 className="text-lg font-semibold">Order #{order.id}</h3>
-                <p className="text-sm">User: {order.user}</p>
+                <p className="text-sm">:User  {order.user}</p>
                 <p className="text-sm">Total: ${order.total.toFixed(2)}</p>
                 <p className="text-sm">Status: {order.status}</p>
                 <ul className="mt-2">
