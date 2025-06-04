@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import Protected from '../../components/Protected';
+import VideoPlayer from '../../components/VideoPlayer';
 
 const DetailPage = () => {
   const router = useRouter();
@@ -14,6 +15,7 @@ const DetailPage = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
+  const [currentEpisode, setCurrentEpisode] = useState(1);
 
   useEffect(() => {
     // Fetch item details from an API or database
@@ -27,6 +29,11 @@ const DetailPage = () => {
           poster: 'https://via.placeholder.com/200x300',
           tags: ['Action', 'Adventure'],
           episodes: 12,
+          sources: {
+            1: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+            2: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
+            // Add more episodes as needed
+          },
         },
         '2': {
           id: '2',
@@ -35,6 +42,11 @@ const DetailPage = () => {
           poster: 'https://via.placeholder.com/200x300',
           tags: ['Comedy', 'Slice of Life'],
           episodes: 24,
+          sources: {
+            1: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+            2: 'https://media.w3.org/2010/05/bunny/trailer.mp4',
+            // Add more episodes as needed
+          },
         },
       },
       manga: {
@@ -96,9 +108,15 @@ const DetailPage = () => {
     }
   };
 
+  const handleEpisodeChange = (episode: number) => {
+    setCurrentEpisode(episode);
+  };
+
   if (!item) {
     return <div>Loading...</div>;
   }
+
+  const currentSource = item.sources[currentEpisode];
 
   return (
     <>
@@ -111,6 +129,23 @@ const DetailPage = () => {
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/3">
             <img src={item.poster} alt={item.title} className="w-full h-auto rounded-lg" />
+            <div className="mt-4">
+              <h3 className="text-lg font-bold mb-2">Episodes</h3>
+              <ul className="space-y-2">
+                {[...Array(item.episodes)].map((_, index) => (
+                  <li key={index + 1}>
+                    <button
+                      onClick={() => handleEpisodeChange(index + 1)}
+                      className={`w-full px-4 py-2 rounded-md ${
+                        currentEpisode === index + 1 ? 'bg-indigo-600 text-white' : 'bg-gray-700 text-white'
+                      }`}
+                    >
+                      Episode {index + 1}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
           <div className="md:w-2/3 md:ml-4">
             <h1 className="text-3xl font-bold mb-4">{item.title}</h1>
@@ -124,7 +159,14 @@ const DetailPage = () => {
             </div>
             <div className="mb-4">
               {item.episodes && <span className="text-sm">Episodes: {item.episodes}</span>}
-              {item.chapters && <span className="text-sm">Chapters: {item.chapters}</span>}
+            </div>
+            <div className="mb-4">
+              <VideoPlayer
+                source={currentSource}
+                title={item.title}
+                episodeNumber={currentEpisode}
+                series="Series 1"
+              />
             </div>
             <Protected>
               <div className="mb-4">
