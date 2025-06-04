@@ -62,6 +62,14 @@ const Header = () => {
             </button>
           </>
         )}
+        {session && session.user.email === 'admin@example.com' && (
+          <button
+            onClick={() => router.push('/admin/dashboard')}
+            className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+          >
+            Admin Dashboard
+          </button>
+        )}
       </div>
     </header>
   );
