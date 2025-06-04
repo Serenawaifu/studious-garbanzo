@@ -1,7 +1,7 @@
 // components/VideoPlayer.tsx
 
 import React from 'react';
-import { Player, ControlBar, PlayToggle, VolumeMenuButton, FullscreenToggle, QualityMenuButton } from 'video-react';
+import { Player, ControlBar, PlayToggle, VolumeMenuButton, FullscreenToggle } from 'video-react';
 import 'video-react/dist/video-react.css';
 
 interface VideoPlayerProps {
@@ -24,7 +24,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source, title, episodeNumber,
         <ControlBar autoHide={true} disableDefaultControls={false}>
           <PlayToggle />
           <VolumeMenuButton />
-          <QualityMenuButton order={4.1} />
           <FullscreenToggle />
         </ControlBar>
         <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 text-white">
