@@ -1,7 +1,10 @@
+// pages/index.tsx
+
 import Head from 'next/head';
 import Header from '../components/Header';
 import SakuraBackground from '../components/SakuraBackground';
 import { useRef } from 'react';
+import Protected from '../components/Protected';
 
 const Home = () => {
   const animeRef = useRef(null);
@@ -116,6 +119,12 @@ const Home = () => {
           >
             🡹 Manhwa
           </button>
+          <Protected>
+            <div className="mt-8 bg-gray-700 p-4 rounded-md">
+              <h3 className="text-lg font-semibold">Protected Section</h3>
+              <p className="text-sm">This section is protected and requires login.</p>
+            </div>
+          </Protected>
         </section>
       </main>
     </>
