@@ -2,9 +2,11 @@ import Image from 'next/image';
 import { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isThemeSwitcherOpen, setIsThemeSwitcherOpen] = useState(false);
   const { data: session } = useSession();
 
   return (
@@ -33,6 +35,13 @@ const Header = () => {
           />
         )}
         <ThemeToggle />
+        <button
+          onClick={() => setIsThemeSwitcherOpen(!isThemeSwitcherOpen)}
+          className="ml-4 bg-gray-700 text-white px-4 py-2 rounded-md"
+        >
+          Themes
+        </button>
+        {isThemeSwitcherOpen && <ThemeSwitcher />}
         {session ? (
           <button
             onClick={() => signOut()}
