@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
