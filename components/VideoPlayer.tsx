@@ -4,7 +4,7 @@ import React from 'react';
 import { MuxPlayer } from '@mux/mux-player-react';
 
 interface VideoPlayerProps {
-  source: string; // Mux video URL
+  source: string; // Mux playback ID
   title: string;
   episodeNumber: number;
   series: string;
