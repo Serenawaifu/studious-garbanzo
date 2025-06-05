@@ -5,20 +5,19 @@ import { useSession } from 'next-auth/react';
 import Protected from './Protected';
 import { useRouter } from 'next/router';
 import VideoPlayer from './VideoPlayer';
+import { products } from '../data/products'; // Import the product data
 
-interface Product {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-  description: string;
-  muxPlaybackId: string; // Add Mux playback ID
-}
-
-const ProductPage = ({ product }: { product: Product }) => {
+const ProductPage = ({ productId }: { productId: string }) => {
   const { data: session } = useSession();
   const [quantity, setQuantity] = useState(1);
   const router = useRouter();
+
+  // Find the product by ID
+  const product = products.find((p) => p.id === productId);
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuantity(Number(e.target.value));
